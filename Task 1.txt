@@ -1,0 +1,26 @@
+#include <stdio.h>
+#include <math.h>
+
+int main() {
+    // Визначення змінних
+    int x, y, z;  
+    double total_time;
+
+    // Введення данних
+    printf("Час поїдання пирога 1 гостем (x): ");
+    scanf("%d", &x);
+    printf("Час поїдання пирога 2 гостем (y): ");
+    scanf("%d", &y);
+    printf("Час поїдання пирога 3 гостем (z): ");
+    scanf("%d", &z);
+
+    // Основна формула
+    total_time = 1 / (1.0 / x + 1.0 / y + 1.0 / z);
+    // Округлення до 2 знаків після коми
+    total_time = round(total_time * 100) / 100;
+
+    // Результат
+    printf("Всі гості з'їдять пиріг за: %.2lf годин\n", total_time);
+
+    return 0;
+}

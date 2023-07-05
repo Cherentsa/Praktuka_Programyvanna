@@ -1,30 +1,46 @@
 #include <stdio.h>
 
-long long countNumbers(int r) {
-    long long dp[31][2];
-    
-    // Ініціалізація початкових значень
-    dp[1][0] = 2; // Однорозрядні числа: 5 та 9
-    dp[1][1] = 2; // Однорозрядні числа без поручних однакових цифр: 5 та 9
-    
-    // Обчислення кількості чисел
-    for (int i = 2; i <= r; i++) {
-        dp[i][0] = dp[i - 1][0] + dp[i - 1][1]; // Числа з поручними однаковими цифрами
-        dp[i][1] = dp[i - 1][0] + dp[i - 1][1]; // Числа без поручних однакових цифр
+// Функція для підрахунку кількості чисел із р розрядів
+int countNumbers(int r) {
+    // Ініціалізуємо лічильник кількості чисел
+    int count = 0;
+
+    // Рекурсивна функція для генерації чисел з розрядами
+    // digit1, digit2 - попередні дві цифри
+    // current - поточний розряд (від 1 до r)
+    int generateNumbers(int digit1, int digit2, int current) {
+        // Базовий випадок: досягнуто останнього розряду
+        if (current == r + 1) {
+            count++;
+            return;
+        }
+
+        // Генеруємо числа з цифрами 5 та 9, з умовою, що три однакові цифри не стоять поруч
+        for (int digit = 5; digit <= 9; digit += 4) {
+            if (digit != digit1 || digit != digit2) {
+                generateNumbers(digit2, digit, current + 1);
+            }
+        }
     }
-    
-    return dp[r][0] + dp[r][1];
+
+    // Початковий виклик рекурсивної функції
+    generateNumbers(0, 0, 1);
+
+    return count;
 }
 
 int main() {
     int r;
 
-    printf("Введіть кількість розрядів р: ");
+    // Введення значення
+    printf("Введіть розряди р: ");
     scanf("%d", &r);
 
-    long long numberCount = countNumbers(r);
+    // Підрахунок кількості чисел
+    int result = countNumbers(r);
 
-    printf("Кількість чисел із %d розрядів: %lld\n", r, numberCount);
+    // Виведення результату
+    printf("Кількість чисел із розрядами %d: %d\n", r, result);
 
     return 0;
 }

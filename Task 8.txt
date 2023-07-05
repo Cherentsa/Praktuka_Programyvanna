@@ -1,0 +1,44 @@
+#include <stdio.h>
+#include <string.h>
+
+// Рекурсивна функція для генерації анаграм
+void generateAnagrams(char *word, int start, int end, int *anagramCount) {
+    if (start == end) {
+        (*anagramCount)++;
+    } else {
+        for (int i = start; i <= end; i++) {
+            // Пропускаємо випадки, коли однакові символи зустрічаються підряд
+            if (i != start && word[i] == word[start])
+                continue;
+
+            // Обмін символами
+            char temp = word[start];
+            word[start] = word[i];
+            word[i] = temp;
+
+            // Рекурсивно генеруємо анаграми залишку слова
+            generateAnagrams(word, start + 1, end, anagramCount);
+
+            // Повертаємо початкову перестановку
+            temp = word[start];
+            word[start] = word[i];
+            word[i] = temp;
+        }
+    }
+}
+
+int main() {
+    char word[15];
+    int anagramCount = 0;
+
+    printf("Введіть слово: ");
+    scanf("%s", word);
+
+    int n = strlen(word);
+
+    generateAnagrams(word, 0, n - 1, &anagramCount);
+
+    printf("Кількість анаграм: %d\n", anagramCount);
+
+    return 0;
+}

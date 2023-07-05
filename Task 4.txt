@@ -1,0 +1,26 @@
+#include <stdio.h>
+//Основна функція
+int countDivisors(int n) {
+    int count = 0;
+
+    for (int i = 1; i <= n; i++) {
+        if (n % i == n / i) {
+            count++;
+        }
+    }
+
+    return count;
+}
+
+int main() {
+    int n;
+    //Введення числа n
+    printf("Введіть натуральне число n: ");
+    scanf("%d", &n);
+    //Обчислення
+    int divisorsCount = countDivisors(n);
+    //Вивід результату
+    printf("Кількість рівних дільників числа %d: %d\n", n, divisorsCount);
+
+    return 0;
+}
